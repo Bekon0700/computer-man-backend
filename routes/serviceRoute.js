@@ -5,5 +5,6 @@ const router = express.Router()
 
 router.route('/')
     .get(allServices)
+    .post(addService)
 
 module.exports = router

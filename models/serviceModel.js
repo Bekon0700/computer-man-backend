@@ -24,6 +24,7 @@ const serviceSchema = new mongoose.Schema(
             validate: function (value) {
                 return value < 100 && value > 0
             },
+            default: 23.5,
             message: 'Discount percentage must be lesser than 100 and greater than 0'
         },
         rating: {
