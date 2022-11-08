@@ -7,4 +7,8 @@ router.route('/')
     .get(allServices)
     .post(addService)
 
+router.route('/:slugId')
+    .patch(updateService)
+    .delete(deleteService)
+
 module.exports = router
