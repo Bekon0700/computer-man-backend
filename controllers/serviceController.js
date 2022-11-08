@@ -40,5 +40,10 @@ exports.updateService = catchAsync(async (req, res, next) => {
 })
 
 exports.deleteService = catchAsync(async (req, res, next) => {
+    const slugId = req.params.slugId
+    const service = await Service.deleteOne({ slug: slugId })
 
+    res.status(200).json({
+        status: 'success',
+    })
 })
