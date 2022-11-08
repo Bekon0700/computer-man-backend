@@ -46,8 +46,20 @@ const serviceSchema = new mongoose.Schema(
             type: Date,
             default: Date.now()
         }
+    },
+    {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     }
 )
+
+// virtual populate
+serviceSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'service',
+    localField: '_id',
+});
+
 
 serviceSchema.pre('save', function (next) {
     this.slug = slugify(this.serviceName, { lower: true, strict: true });

@@ -23,27 +23,31 @@ exports.addService = catchAsync(async (req, res, next) => {
 })
 
 exports.updateService = catchAsync(async (req, res, next) => {
-    const slugId = req.params.slugId
+    const serviceId = req.params.serviceId
     const updateServiceData = req.body
-    const service = await Service.updateOne({ slug: slugId }, updateServiceData)
-
-    if (service.matchedCount == 0) {
-        return next(
-            new AppError('This is not a valid service to fix', 204)
-        );
-    }
+    const service = await Service.findOneAndUpdate({ _id: serviceId }, updateServiceData)
 
     res.status(200).json({
         status: 'success',
-        service
     })
 })
 
 exports.deleteService = catchAsync(async (req, res, next) => {
-    const slugId = req.params.slugId
-    const service = await Service.deleteOne({ slug: slugId })
+    const serviceId = req.params.serviceId
+    const service = await Service.findOneAndDelete({ _id: serviceId })
 
     res.status(200).json({
         status: 'success',
+    })
+})
+
+exports.oneService = catchAsync(async (req, res, next) => {
+    const serviceId = req.params.serviceId
+    console.log(serviceId)
+    const service = await Service.findById(serviceId)
+
+    res.status(200).json({
+        status: 'success',
+        service
     })
 })
