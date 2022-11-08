@@ -13,6 +13,10 @@ app.use(express.json({ limit: '10kb' }))
 app.use(morgan('dev'))
 
 
+app.get('/', (req, res) => {
+    res.send('Server is running, ok &#128528')
+})
+
 app.use('/api/v1/services', serviceRouter);
 app.use('/api/v1/reviews', reviewRouter);
 
