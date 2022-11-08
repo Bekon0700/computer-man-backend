@@ -12,7 +12,7 @@ const reviewSchema = new mongoose.Schema(
         },
         serviceName: {
             type: String,
-            trim: true
+            default: 'computer-man'
         },
         service: {
             type: mongoose.Schema.ObjectId,

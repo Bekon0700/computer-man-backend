@@ -1,14 +1,17 @@
 const express = require('express')
-const { specificUserReview, deleteReview, updateReview, addReview } = require('../controllers/reviewController')
+const { specificUserReview, deleteUserReview, updateReview, addReview } = require('../controllers/reviewController')
 
 const router = express.Router()
 
 router.route('/')
-    .post(addReview)
+    .get(specificUserReview)
+    .post(addReview);
 
-// .get(specificUserReview)
 router.route('/:reviewId')
     .patch(updateReview)
-    .delete(deleteReview)
+    .delete(deleteUserReview)
+
+router.route('/:email')
+    .get(specificUserReview)
 
 module.exports = router

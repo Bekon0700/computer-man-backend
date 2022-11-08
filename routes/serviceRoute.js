@@ -4,11 +4,9 @@ const { allServices, addService, deleteService, updateService, oneService } = re
 const router = express.Router()
 
 router.route('/')
-    .get(allServices)
     .post(addService)
 
 router.route('/:serviceId')
-    .get(oneService)
     .patch(updateService)
     .delete(deleteService)
 

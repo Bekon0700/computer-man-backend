@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const Review = require('./reviewModel')
 
 const serviceSchema = new mongoose.Schema(
     {

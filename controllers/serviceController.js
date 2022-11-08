@@ -25,7 +25,7 @@ exports.addService = catchAsync(async (req, res, next) => {
 exports.updateService = catchAsync(async (req, res, next) => {
     const serviceId = req.params.serviceId
     const updateServiceData = req.body
-    const service = await Service.findOneAndUpdate({ _id: serviceId }, updateServiceData)
+    const service = await Service.findByIdAndUpdate({ _id: serviceId }, updateServiceData)
 
     res.status(200).json({
         status: 'success',
@@ -34,7 +34,7 @@ exports.updateService = catchAsync(async (req, res, next) => {
 
 exports.deleteService = catchAsync(async (req, res, next) => {
     const serviceId = req.params.serviceId
-    const service = await Service.findOneAndDelete({ _id: serviceId })
+    const service = await Service.findByIdAndDelete(serviceId)
 
     res.status(200).json({
         status: 'success',

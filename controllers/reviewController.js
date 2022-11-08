@@ -16,28 +16,28 @@ exports.addReview = catchAsync(async (req, res, next) => {
 exports.updateReview = catchAsync(async (req, res, next) => {
     const reviewId = req.params.reviewId
     const updateReviewData = req.body
-    const review = await Review.findOneAndUpdate({ _id: reviewId }, updateReviewData)
+    const review = await Review.findByIdAndUpdate({ _id: reviewId }, updateReviewData)
 
     res.status(200).json({
         status: 'success',
     })
 })
 
-exports.deleteReview = catchAsync(async (req, res, next) => {
+exports.deleteUserReview = catchAsync(async (req, res, next) => {
     const reviewId = req.params.reviewId
-    const review = await Review.findOneAndDelete({ _id: reviewId })
+    const review = await Review.findByIdAndDelete(reviewId)
 
     res.status(200).json({
         status: 'success',
     })
 })
 
-// exports.specificUserReview = catchAsync(async (req, res, next) => {
-//     const slugId = req.params.reviewId
-//     const service = await Service.findOne({ slug: slugId })
+exports.specificUserReview = catchAsync(async (req, res, next) => {
+    const email = req.params.email
+    const reviews = await Review.find({ email })
 
-//     res.status(200).json({
-//         status: 'success',
-//         service
-//     })
-// })
+    res.status(200).json({
+        status: 'success',
+        reviews: reviews
+    })
+})
