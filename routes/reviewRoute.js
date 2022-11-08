@@ -4,7 +4,6 @@ const { specificUserReview, deleteUserReview, updateReview, addReview } = requir
 const router = express.Router()
 
 router.route('/')
-    .get(specificUserReview)
     .post(addReview);
 
 router.route('/:reviewId')

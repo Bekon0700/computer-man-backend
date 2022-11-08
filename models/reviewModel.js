@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Service = require('./serviceModel')
 const reviewSchema = new mongoose.Schema(
     {
         review: {
@@ -14,7 +14,7 @@ const reviewSchema = new mongoose.Schema(
             type: String,
             default: 'computer-man'
         },
-        service: {
+        serviceId: {
             type: mongoose.Schema.ObjectId,
             ref: 'Service',
             required: [true, 'A review must belong to a service'],

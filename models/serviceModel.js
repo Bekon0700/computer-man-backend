@@ -57,7 +57,7 @@ const serviceSchema = new mongoose.Schema(
 // virtual populate
 serviceSchema.virtual('reviews', {
     ref: 'Review',
-    foreignField: 'service',
+    foreignField: 'serviceId',
     localField: '_id',
 });
 
