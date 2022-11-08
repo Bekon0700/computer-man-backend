@@ -1,6 +1,32 @@
 const catchAsync = require('./../utils/catchAsync')
 const AppError = require("../utils/appError");
 const Review = require('./../models/reviewModel')
+const jwt = require('jsonwebtoken');
+
+const signToken = (email) => {
+    return jwt.sign({ email }, process.env.JWT_SECRET);
+};
+
+
+exports.createToken = (req, res) => {
+    const token = signToken(req.body.email);
+
+    const cookieOptions = {
+        httpOnly: true,
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+        ),
+    };
+
+    if (process.env.NODE_ENV === 'production') cookieOptions[secure] = true;
+
+    res.cookie('jwt', token, cookieOptions);
+
+    res.status(201).json({
+        status: 'success',
+        token,
+    });
+};
 
 
 exports.addReview = catchAsync(async (req, res, next) => {

@@ -1,10 +1,13 @@
 const express = require('express')
-const { specificUserReview, deleteUserReview, updateReview, addReview } = require('../controllers/reviewController')
+const { specificUserReview, deleteUserReview, updateReview, addReview, createToken } = require('../controllers/reviewController')
 
 const router = express.Router()
 
 router.route('/')
     .post(addReview);
+
+router.route('/createToken')
+    .post(createToken);
 
 router.route('/:reviewId')
     .patch(updateReview)
