@@ -1,9 +1,12 @@
 const catchAsync = require('./../utils/catchAsync')
 const AppError = require("../utils/appError");
+const APIFeature = require("../utils/apiFeatures");
 const Service = require('./../models/serviceModel')
 
 exports.allServices = catchAsync(async (req, res, next) => {
-    const services = await Service.find()
+    const query = Service.find()
+    const features = new APIFeature(query, req.query).filter().sort().fieldLimit().pagination()
+    const services = await features.query
 
     res.status(200).json({
         status: 'success',
