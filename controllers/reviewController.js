@@ -4,7 +4,9 @@ const Review = require('./../models/reviewModel')
 const jwt = require('jsonwebtoken');
 
 const signToken = (email) => {
-    return jwt.sign({ email }, process.env.JWT_SECRET);
+    return jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN
+    });
 };
 
 
@@ -27,6 +29,25 @@ exports.createToken = (req, res) => {
         token,
     });
 };
+
+
+exports.checkAuth = (req, res, next) => {
+    const header = req.headers.authorization?.split(' ')[1]
+    if (!header) {
+        return next(new AppError('Unauthorized user', 401))
+    }
+    jwt.verify(header, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return next(new AppError('Unauthorized user', 401))
+        } else {
+            req.user = {
+                email: decoded.email
+            }
+            next()
+        }
+    })
+}
+
 
 
 exports.addReview = catchAsync(async (req, res, next) => {
@@ -60,6 +81,11 @@ exports.deleteUserReview = catchAsync(async (req, res, next) => {
 
 exports.specificUserReview = catchAsync(async (req, res, next) => {
     const email = req.params.email
+
+    if (req.user.email !== email) {
+        return next(new AppError('Unauthorized Access', 403))
+    }
+
     const reviews = await Review.find({ email })
 
     res.status(200).json({
