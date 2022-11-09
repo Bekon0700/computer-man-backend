@@ -46,7 +46,6 @@ exports.deleteService = catchAsync(async (req, res, next) => {
 
 exports.oneService = catchAsync(async (req, res, next) => {
     const serviceId = req.params.serviceId
-    console.log(serviceId)
     const service = await Service.findById(serviceId).populate('reviews')
 
     res.status(200).json({
