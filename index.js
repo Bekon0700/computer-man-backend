@@ -6,7 +6,11 @@ dotenv.config({
     path: './config.env'
 })
 
-mongoose.connect(process.env.DB_URL)
+global.__basedir = __dirname;
+
+console.log(__basedir)
+
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(con => {
         console.log('DB connection successful')
     }).catch(err => {

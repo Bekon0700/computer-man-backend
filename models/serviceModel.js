@@ -12,6 +12,10 @@ const serviceSchema = new mongoose.Schema(
             maxlength: [60, 'name must be less than or equal 40'],
         },
         slug: String,
+        img: {
+            data: Buffer,
+            contentType: String
+        },
         description: {
             type: String,
             trim: true,
